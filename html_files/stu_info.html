@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生信息</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/stu_info.css') }}">
+</head>
+<body>
+    <div class="info-container">
+        <h1 class="info-title">学生信息详情</h1>
+        <p class="welcome-text">欢迎你，{{ username }}！</p>
+        
+        <div class="info-section">
+            <h2>个人基本信息</h2>
+            <table class="info-table">
+                <tr>
+                    <th>姓名</th>
+                    <td>{{ user.full_name if user.full_name else '未填写' }}</td>
+                </tr>
+                <tr>
+                    <th>学号</th>
+                    <td>{{ user.student_id if user.student_id else '未填写' }}</td>
+                </tr>
+                <tr>
+                    <th>专业</th>
+                    <td>{{ user.major if user.major else '未填写' }}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="info-section">
+            <h2>成绩统计</h2>
+            <table class="score-table">
+                <tr class="table-header">
+                    <th colspan="2">项目</th>
+                    <th>得分</th>
+                </tr>
+                <tr class="main-category">
+                    <td colspan="2">学业综合成绩 (80%)</td>
+                    <td>{{ academic_weighted|default(0)|float }}</td>
+                </tr>
+                <tr class="main-category">
+                    <td colspan="2">考核综合成绩 (20%)</td>
+                    <td>{{ (academic_talent_weighted|default(0)|float) + (comprehensive_weighted|default(0)|float) }}</td>
+                </tr>
+                <tr class="sub-category">
+                    <td colspan="2">- 学术专长成绩 (12%)</td>
+                    <td>{{ academic_talent_weighted|default(0)|float }}</td>
+                </tr>
+                {% if academic_talent_details %}
+                    {% for item in academic_talent_details %}
+                    <tr class="detail-item">
+                        <td></td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.score }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+                <tr class="sub-category">
+                    <td colspan="2">- 综合表现加分 (8%)</td>
+                    <td>{{ comprehensive_weighted|default(0)|float }}</td>
+                </tr>
+                {% if comprehensive_details %}
+                    {% for item in comprehensive_details %}
+                    <tr class="detail-item">
+                        <td></td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.score }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+                <tr class="total-score">
+                    <td colspan="2">总分</td>
+                    <td>{{ final_score|default(0)|float }}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="info-section">
+            <h2>证明材料</h2>
+            <div class="files-container">
+                {% if uploaded_files %}
+                    {% for file in uploaded_files %}
+                    <div class="file-item">
+                        <a href="{{ url_for('static', filename=file) }}" target="_blank" class="file-link">
+                            {% if file.endswith('.jpg') or file.endswith('.jpeg') or file.endswith('.png') or file.endswith('.gif') %}
+                                <img src="{{ url_for('static', filename=file) }}" alt="证明材料" class="file-thumbnail">
+                            {% else %}
+                                <div class="file-icon">📄</div>
+                            {% endif %}
+                            <span class="file-name">{{ file.split('/')[-1] }}</span>
+                        </a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-files">暂无上传的证明材料</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="navigation-links">
+            <a href="{{ url_for('transition_page') }}" class="nav-link">返回选择页面</a>
+            <a href="{{ url_for('student_page') }}" class="nav-link">前往成绩计算</a>
+            <a href="{{ url_for('logout') }}" class="logout-link">退出登录</a>
+        </div>
+    </div>
+</body>
+</html>

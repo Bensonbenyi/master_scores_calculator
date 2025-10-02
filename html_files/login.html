@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 推免成绩管理系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background">
+        <div class="background-gradient"></div>
+    </div>
+    
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-section">
+                <div class="logo">
+                    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="60" height="60" rx="12" fill="url(#gradient)"/>
+                        <path d="M20 25h20v2H20v-2zm0 4h20v2H20v-2zm0 4h15v2H20v-2z" fill="white"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0" y1="0" x2="60" y2="60">
+                                <stop offset="0%" stop-color="#007AFF"/>
+                                <stop offset="100%" stop-color="#5856D6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1 class="app-title">推免成绩管理系统</h1>
+                <p class="app-subtitle">安全登录您的账户</p>
+            </div>
+            
+            <form class="login-form" method="POST" action="{{ url_for('login') }}">
+                <div class="form-group">
+                    <label for="username" class="form-label">用户名</label>
+                    <input type="text" id="username" name="username" placeholder="请输入用户名" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">密码</label>
+                    <input type="password" id="password" name="password" placeholder="请输入密码" class="form-input" required>
+                </div>
+                
+                <button type="submit" class="login-button">
+                    <span>登录</span>
+                </button>
+                
+                <div class="divider">
+                    <span>或</span>
+                </div>
+                
+                <div class="register-section">
+                    <p class="register-text">还没有账户？</p>
+                    <div class="register-buttons">
+                        <a href="{{ url_for('register', role='student') }}" class="register-button student">
+                            <span>学生注册</span>
+                        </a>
+                        <a href="{{ url_for('register', role='teacher') }}" class="register-button teacher">
+                            <span>教师注册</span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

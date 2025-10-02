@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if role == 'teacher' %}教师注册{% else %}学生注册{% endif %} - 推免成绩管理系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background">
+        <div class="background-gradient"></div>
+    </div>
+    
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-section">
+                <div class="logo">
+                    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="60" height="60" rx="12" fill="url(#gradient)"/>
+                        {% if role == 'teacher' %}
+                        <path d="M30 20c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm-8 8c0-4.4 3.6-8 8-8s8 3.6 8 8v2H22v-2z" fill="white"/>
+                        {% else %}
+                        <path d="M25 22h10v2H25v-2zm0 4h10v2H25v-2zm0 4h8v2H25v-2zm0 4h6v2H25v-2z" fill="white"/>
+                        {% endif %}
+                        <defs>
+                            <linearGradient id="gradient" x1="0" y1="0" x2="60" y2="60">
+                                {% if role == 'teacher' %}
+                                <stop offset="0%" stop-color="#FF6B6B"/>
+                                <stop offset="100%" stop-color="#FF8E53"/>
+                                {% else %}
+                                <stop offset="0%" stop-color="#4ECDC4"/>
+                                <stop offset="100%" stop-color="#44A08D"/>
+                                {% endif %}
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1 class="app-title">{% if role == 'teacher' %}教师注册{% else %}学生注册{% endif %}</h1>
+                <p class="app-subtitle">创建您的{% if role == 'teacher' %}教师{% else %}学生{% endif %}账户</p>
+            </div>
+            
+            <form class="login-form" method="POST" action="{{ url_for('register', role=role) }}">
+                <input type="hidden" name="role" value="{{ role }}">
+                
+                <div class="form-group">
+                    <label for="username" class="form-label">用户名</label>
+                    <input type="text" id="username" name="username" placeholder="请输入用户名" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">密码</label>
+                    <input type="password" id="password" name="password" placeholder="请输入密码" class="form-input" required>
+                </div>
+                
+                {% if role == 'teacher' %}
+                <div class="form-group">
+                    <label for="teacher_code" class="form-label">教师验证码</label>
+                    <input type="password" id="teacher_code" name="teacher_code" placeholder="请输入教师验证码" class="form-input" required>
+                    <p class="form-hint">请联系管理员获取教师验证码</p>
+                </div>
+                {% endif %}
+                
+                <button type="submit" class="login-button">
+                    <span>创建账户</span>
+                </button>
+                
+                <div class="back-section">
+                    <p class="back-text">已有账户？</p>
+                    <a href="{{ url_for('login') }}" class="back-link">返回登录</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

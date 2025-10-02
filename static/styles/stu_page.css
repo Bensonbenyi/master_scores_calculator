@@ -1,0 +1,222 @@
+.student-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.stu_page_title {
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.welcome-text {
+    font-size: 18px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.logout {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.logout-link {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #f0f0f0;
+    text-decoration: none;
+    color: #333;
+    border-radius: 4px;
+}
+
+.logout-link:hover {
+    background-color: #e0e0e0;
+}
+
+/* 成绩计算器样式 */
+.score-calculator {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.score-calculator h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.section {
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #fff;
+}
+
+.section h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.subsection {
+    margin: 20px 0;
+}
+
+.subsection h4 {
+    color: #3498db;
+    margin-bottom: 15px;
+}
+
+.category {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+.category h5 {
+    margin-top: 0;
+    color: #555;
+    font-size: 16px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.checkbox-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: normal;
+    padding-left: 25px;
+    position: relative;
+}
+
+.checkbox-group input[type="checkbox"] {
+    position: absolute;
+    left: 0;
+    top: 3px;
+}
+
+input[type="number"], input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.hint {
+    font-size: 12px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.calculate-btn, .reset-btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.calculate-btn {
+    background-color: #3498db;
+    color: white;
+}
+
+.reset-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.calculate-btn:hover {
+    background-color: #2980b9;
+}
+
+.reset-btn:hover {
+    background-color: #c0392b;
+}
+
+.result {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e8f4f8;
+    border-radius: 5px;
+    border-left: 5px solid #3498db;
+}
+
+.result h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.final-score {
+    font-size: 18px;
+    color: #2c3e50;
+}
+
+.final-score strong {
+    color: #e74c3c;
+    font-size: 22px;
+}
+
+/* 导航链接样式 */
+.navigation-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.nav-link {
+    color: #3498db;
+    text-decoration: none;
+    margin: 10px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    transition: all 0.3s;
+}
+
+.nav-link:hover {
+    color: #fff;
+    background-color: #3498db;
+    text-decoration: none;
+}
+
+.logout-link {
+    color: #e74c3c;
+    text-decoration: none;
+    margin: 10px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    transition: all 0.3s;
+}
+
+.logout-link:hover {
+    color: #fff;
+    background-color: #e74c3c;
+    text-decoration: none;
+}

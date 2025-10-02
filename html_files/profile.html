@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人信息</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/profile.css') }}">
+</head>
+<body>
+    <div class="profile-container">
+        <h1 class="profile-title">个人信息</h1>
+        <p class="welcome-text">欢迎你，{{ username }}！</p>
+        
+        <div class="profile-form-container">
+            <form id="profileForm" method="POST" action="{{ url_for('save_profile') }}">
+                <div class="form-group">
+                    <label for="full_name" class="form-label">姓名：</label>
+                    <input type="text" id="full_name" name="full_name" class="form-input" value="{{ profile.full_name if profile else '' }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="student_id" class="form-label">学号：</label>
+                    <input type="text" id="student_id" name="student_id" class="form-input" value="{{ profile.student_id if profile else '' }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="major" class="form-label">专业：</label>
+                    <input type="text" id="major" name="major" class="form-input" value="{{ profile.major if profile else '' }}" required>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">保存信息</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="navigation-links">
+            <a href="{{ url_for('transition_page') }}" class="nav-link">返回选择页面</a>
+            <a href="{{ url_for('student_page') }}" class="nav-link">前往成绩计算</a>
+            <a href="{{ url_for('logout') }}" class="logout-link">退出登录</a>
+        </div>
+    </div>
+</body>
+</html>

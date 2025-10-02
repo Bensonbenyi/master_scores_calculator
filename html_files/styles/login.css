@@ -1,0 +1,39 @@
+.login-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.login-title {
+    font-size: 32px;
+}
+
+.login-form {
+    margin-top: 30px;
+}
+
+.form-item {
+    margin: 20px 0;
+}
+
+.form-label {
+    display: inline-block;
+    width: 70px;
+    text-align: right;
+}
+
+.form-input {
+    margin-left: 10px;
+}
+
+.login-button {
+    margin: 30px 0;
+}
+
+.register-button {
+    margin-top: 40px;
+}
+
+.button {
+    padding: 5px 20px;
+    font-size: 16px;
+}

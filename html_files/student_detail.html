@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生详情</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/student_detail.css') }}">
+</head>
+<body>
+    <div class="detail-container">
+        <header class="detail-header">
+            <h1>学生详细信息</h1>
+            <div class="user-info">
+                <span>教师：{{ username }}</span>
+                <a href="{{ url_for('teacher_dashboard') }}" class="back-button">返回面板</a>
+                <a href="{{ url_for('logout') }}" class="logout-button">退出登录</a>
+            </div>
+        </header>
+        
+        <div class="detail-content">
+            <section class="student-basic-info">
+                <h2>基本信息</h2>
+                <div class="info-group">
+                    <div class="info-item">
+                        <span class="info-label">姓名：</span>
+                        <span class="info-value">{{ student.full_name or '未填写' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">学号：</span>
+                        <span class="info-value">{{ student.student_id or '未填写' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">专业：</span>
+                        <span class="info-value">{{ student.major or '未填写' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">用户名：</span>
+                        <span class="info-value">{{ student.username }}</span>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="student-score-info">
+                <h2>成绩信息</h2>
+                <div class="score-summary">
+                    <div class="score-card">
+                        <div class="score-value">{{ final_score }}</div>
+                        <div class="score-label">综合成绩</div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score-value">{{ academic_weighted }}</div>
+                        <div class="score-label">学业成绩</div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score-value">{{ academic_talent_weighted }}</div>
+                        <div class="score-label">学术专长成绩</div>
+                    </div>
+                    <div class="score-card">
+                        <div class="score-value">{{ comprehensive_weighted }}</div>
+                        <div class="score-label">综合表现成绩</div>
+                    </div>
+                </div>
+                
+                <div class="score-details">
+                    <h3>学术专长成绩详情</h3>
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>项目</th>
+                                <th>分数</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in academic_talent_details %}
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.score }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                    <h3>综合表现成绩详情</h3>
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>项目</th>
+                                <th>分数</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in comprehensive_details %}
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.score }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <section class="student-files">
+                <h2>上传的文件</h2>
+                {% if uploaded_files %}
+                <ul class="file-list">
+                    {% for file in uploaded_files %}
+                    <li class="file-item">
+                        <a href="{{ url_for('static', filename=file) }}" target="_blank">
+                            {{ file.split('/')[-1] }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="no-files">该学生尚未上传任何文件</p>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+</body>
+</html>
+

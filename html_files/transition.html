@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择页面</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/transition.css') }}">
+</head>
+<body>
+    <div class="transition-container">
+        <h1 class="transition-title">欢迎你，{{ username }}！</h1>
+        <div class="options-container">
+            <div class="option-box">
+                <a href="{{ url_for('profile_page') }}" class="option-link">
+                    <div class="option-content">
+                        <h2>个人信息</h2>
+                        <p>填写和管理您的个人基本信息</p>
+                    </div>
+                </a>
+            </div>
+            <div class="option-box">
+                <a href="{{ url_for('student_page') }}" class="option-link">
+                    <div class="option-content">
+                        <h2>成绩计算</h2>
+                        <p>计算您的推免综合成绩</p>
+                    </div>
+                </a>
+            </div>
+            <div class="option-box">
+                <a href="{{ url_for('student_info') }}" class="option-link">
+                    <div class="option-content">
+                        <h2>信息汇总</h2>
+                        <p>查看个人信息、成绩统计及证明材料</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="logout">
+            <a href="{{ url_for('logout') }}" class="logout-link">退出登录</a>
+        </div>
+    </div>
+</body>
+</html>

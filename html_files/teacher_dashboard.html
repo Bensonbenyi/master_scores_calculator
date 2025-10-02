@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教师面板</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/teacher_dashboard.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>教师管理面板</h1>
+            <div class="user-info">
+                <span>欢迎，{{ username }}</span>
+                <a href="{{ url_for('logout') }}" class="logout-button">退出登录</a>
+            </div>
+        </header>
+        
+        <div class="dashboard-content">
+            <div class="content-header">
+                <h2>学生推免综合成绩排名</h2>
+                <a href="{{ url_for('export_excel') }}" class="export-button">导出Excel</a>
+            </div>
+            
+            <div class="filter-section">
+                <label for="sort-select">排序方式：</label>
+                <select id="sort-select" onchange="changeSort(this.value)">
+                    <option value="final_score" {% if sort_by == 'final_score' %}selected{% endif %}>综合成绩</option>
+                    <option value="academic_score" {% if sort_by == 'academic_score' %}selected{% endif %}>学业成绩</option>
+                    <option value="academic_talent_score" {% if sort_by == 'academic_talent_score' %}selected{% endif %}>学术专长成绩</option>
+                    <option value="comprehensive_score" {% if sort_by == 'comprehensive_score' %}selected{% endif %}>综合表现成绩</option>
+                </select>
+                
+                <label for="order-select">顺序：</label>
+                <select id="order-select" onchange="changeOrder(this.value)">
+                    <option value="desc" {% if order == 'desc' %}selected{% endif %}>从高到低</option>
+                    <option value="asc" {% if order == 'asc' %}selected{% endif %}>从低到高</option>
+                </select>
+            </div>
+            
+            <table class="student-table">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>姓名</th>
+                        <th>学号</th>
+                        <th>专业</th>
+                        <th>综合成绩</th>
+                        <th>学业成绩</th>
+                        <th>学术专长成绩</th>
+                        <th>综合表现成绩</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ student.full_name or '未填写' }}</td>
+                        <td>{{ student.student_id or '未填写' }}</td>
+                        <td>{{ student.major or '未填写' }}</td>
+                        <td>{{ student.final_score }}</td>
+                        <td>{{ student.academic_score }}</td>
+                        <td>{{ student.academic_talent_score }}</td>
+                        <td>{{ student.comprehensive_score }}</td>
+                        <td><a href="{{ url_for('student_detail', student_id=student.id) }}" class="detail-button">查看详情</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        function changeSort(sortBy) {
+            const orderSelect = document.getElementById('order-select');
+            window.location.href = `{{ url_for('teacher_dashboard') }}?sort_by=${sortBy}&order=${orderSelect.value}`;
+        }
+        
+        function changeOrder(order) {
+            const sortSelect = document.getElementById('sort-select');
+            window.location.href = `{{ url_for('teacher_dashboard') }}?sort_by=${sortSelect.value}&order=${order}`;
+        }
+    </script>
+</body>
+</html>
+

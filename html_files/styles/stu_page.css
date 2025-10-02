@@ -1,0 +1,29 @@
+.student-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.stu_page_title {
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    font-size: 32px;
+}
+
+.welcome-text {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.logout-link {
+    display: inline-block;
+    padding: 5px 20px;
+    background-color: #f0f0f0;
+    text-decoration: none;
+    color: #333;
+    border-radius: 4px;
+}
+
+.logout-link:hover {
+    background-color: #e0e0e0;
+}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生页面</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/stu_page.css') }}">
+</head>
+<body>
+    <div class="student-container">
+        <h1 class="stu_page_title">学生页面</h1>
+        <p class="welcome-text">欢迎你，{{ username }}！</p>
+        
+        <div class="score-calculator">
+            <h2>推免成绩计算器</h2>
+            
+            <form id="scoreForm" method="POST" action="{{ url_for('calculate_score') }}" enctype="multipart/form-data">
+                <div class="section">
+                    <h3>一、学业综合成绩 (80%)</h3>
+                    <div class="form-group">
+                        <label for="academic_score">学业成绩 (百分制)：</label>
+                        <input type="number" id="academic_score" name="academic_score" min="0" max="100" value="0" step="any" required>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>二、考核综合成绩 (20%)</h3>
+                    
+                    <div class="subsection">
+                        <h4>1. 学术专长成绩 (12%)</h4>
+                        
+                        <div class="category">
+                            <h5>学术论文</h5>
+                            <div class="form-group checkbox-group">
+                                <label><input type="checkbox" name="academic_paper" value="nature_science_first" data-score="12"> Nature/Science/Cell正刊及子刊 (IF≥10) - 第一作者 (12分)</label>
+                                <label><input type="checkbox" name="academic_paper" value="ccf_a_first" data-score="1.5"> CCF-A类会议/期刊 - 第一作者 (1.5分)</label>
+                                <label><input type="checkbox" name="academic_paper" value="ccf_a_second" data-score="0.75"> CCF-A类会议/期刊 - 第二作者 (0.75分)</label>
+                                <label><input type="checkbox" name="academic_paper" value="ccf_a_third" data-score="0.45"> CCF-A类会议/期刊 - 第三作者 (0.45分)</label>
+                                <label><input type="checkbox" name="academic_paper" value="ccf_a_fourth" data-score="0.3"> CCF-A类会议/期刊 - 第四作者 (0.3分)</label>
+                                <label><input type="checkbox" name="academic_paper" value="ccf_c_first" data-score="0.25"> CCF-C类会议/期刊 - 第一作者 (0.25分)</label>
+                                <label><input type="checkbox" name="academic_paper" value="ccf_c_second" data-score="0.125"> CCF-C类会议/期刊 - 第二作者 (0.125分)</label>
+                                <label><input type="checkbox" name="academic_paper" value="ccf_c_third" data-score="0.075"> CCF-C类会议/期刊 - 第三作者 (0.075分)</label>
+                            </div>
+                        </div>
+                        
+                        <div class="category">
+                            <h5>发明专利</h5>
+                            <div class="form-group checkbox-group">
+                                <label><input type="checkbox" name="patent" value="patent_first_2" data-score="1.8"> 国家发明专利 - 第一作者 (共2人) (1.8分)</label>
+                                <label><input type="checkbox" name="patent" value="patent_first_4" data-score="1.5"> 国家发明专利 - 第一作者 (共4人) (1.5分)</label>
+                                <label><input type="checkbox" name="patent" value="patent_third" data-score="0.45"> 国家发明专利 - 第三作者 (0.45分)</label>
+                                <label><input type="checkbox" name="patent" value="patent_fourth" data-score="0.3"> 国家发明专利 - 第四作者 (0.3分)</label>
+                            </div>
+                        </div>
+                        
+                        <div class="category">
+                            <h5>竞赛获奖 - 国家级</h5>
+                            <div class="form-group checkbox-group">
+                                <label><input type="checkbox" name="competition_national" value="a_plus_first_team" data-score="4"> A+类一等奖 - 团体 (排名前3) (4分)</label>
+                                <label><input type="checkbox" name="competition_national" value="a_first_team" data-score="3.375"> A类一等奖 - 团体 (排名前3) (3.375分)</label>
+                                <label><input type="checkbox" name="competition_national" value="a_minus_first_team" data-score="2.6666"> A-类一等奖 - 团体 (排名前3) (2.6666分)</label>
+                                <label><input type="checkbox" name="competition_national" value="a_second_team" data-score="2.25"> A类二等奖 - 团体 (排名前3) (2.25分)</label>
+                                <label><input type="checkbox" name="competition_national" value="a_minus_second_team" data-score="1.5"> A-类二等奖 - 团体 (排名前3) (1.5分)</label>
+                                <label><input type="checkbox" name="competition_national" value="a_third_team" data-score="1.35"> A类三等奖 - 团体 (排名前3) (1.35分)</label>
+                                <label><input type="checkbox" name="competition_national" value="a_minus_third_team" data-score="0.9"> A-类三等奖 - 团体 (排名前3) (0.9分)</label>
+                                <label><input type="checkbox" name="competition_national" value="a_second_individual" data-score="2.25"> A类二等奖 - 个人 (2.25分)</label>
+                                <label><input type="checkbox" name="competition_national" value="a_third_individual" data-score="1.35"> A类三等奖 - 个人 (1.35分)</label>
+                            </div>
+                        </div>
+                        
+                        <div class="category">
+                            <h5>竞赛获奖 - 省级</h5>
+                            <div class="form-group checkbox-group">
+                                <label><input type="checkbox" name="competition_provincial" value="a_first_team" data-score="1.2"> A类一等奖 - 团体 (排名前3) (1.2分)</label>
+                                <label><input type="checkbox" name="competition_provincial" value="a_minus_first_team" data-score="0.8"> A-类一等奖 - 团体 (排名前3) (0.8分)</label>
+                                <label><input type="checkbox" name="competition_provincial" value="a_second_team" data-score="0.6"> A类二等奖 - 团体 (排名前3) (0.6分)</label>
+                                <label><input type="checkbox" name="competition_provincial" value="a_minus_second_team" data-score="0.4"> A-类二等奖 - 团体 (排名前3) (0.4分)</label>
+                                <label><input type="checkbox" name="competition_provincial" value="a_third_team" data-score="0.27"> A类三等奖 - 团体 (排名前3) (0.27分)</label>
+                                <label><input type="checkbox" name="competition_provincial" value="a_first_individual" data-score="1.2"> A类一等奖 - 个人 (1.2分)</label>
+                                <label><input type="checkbox" name="competition_provincial" value="a_second_individual" data-score="0.6"> A类二等奖 - 个人 (0.6分)</label>
+                            </div>
+                        </div>
+                        
+                        <div class="category">
+                            <h5>特殊竞赛 - CCF CSP认证</h5>
+                            <div class="form-group checkbox-group">
+                                <label><input type="checkbox" name="ccf_csp" value="csp_400" data-score="4"> ≥400分 (4分)</label>
+                                <label><input type="checkbox" name="ccf_csp" value="csp_320_399" data-score="3"> 320-399分 (3分)</label>
+                                <label><input type="checkbox" name="ccf_csp" value="csp_280_319" data-score="2"> 280-319分 (2分)</label>
+                            </div>
+                        </div>
+                        
+                        <div class="category">
+                            <h5>创新创业训练项目</h5>
+                            <div class="form-group checkbox-group">
+                                <label><input type="checkbox" name="innovation_project" value="national_leader" data-score="1"> 国家级 - 队长 (1分)</label>
+                                <label><input type="checkbox" name="innovation_project" value="national_member" data-score="0.3"> 国家级 - 队员 (0.3分)</label>
+                                <label><input type="checkbox" name="innovation_project" value="provincial_leader" data-score="0.5"> 省级 - 队长 (0.5分)</label>
+                                <label><input type="checkbox" name="innovation_project" value="provincial_member" data-score="0.2"> 省级 - 队员 (0.2分)</label>
+                                <label><input type="checkbox" name="innovation_project" value="school_leader" data-score="0.1"> 校级 - 队长 (0.1分)</label>
+                                <label><input type="checkbox" name="innovation_project" value="school_member" data-score="0.05"> 校级 - 队员 (0.05分)</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="subsection">
+                        <h4>2. 综合表现加分 (8%)</h4>
+                        
+                        <div class="category">
+                            <h5>荣誉称号</h5>
+                            <div class="form-group checkbox-group">
+                                <label><input type="checkbox" name="honor" value="good_student" data-score="0.2"> 三好学生 - 校级 (0.2分)</label>
+                                <label><input type="checkbox" name="honor" value="excellent_student" data-score="0.2"> 优秀三好学生 - 校级 (0.2分)</label>
+                                <label><input type="checkbox" name="honor" value="excellent_cadre" data-score="0.2"> 优秀学生干部 - 校级 (0.2分)</label>
+                                <label><input type="checkbox" name="honor" value="excellent_league_member" data-score="0.2"> 优秀共青团员 - 校级 (0.2分)</label>
+                                <label><input type="checkbox" name="honor" value="red_flag_branch" data-score="0.1"> 五四红旗团支部 - 校级 (0.1分)</label>
+                            </div>
+                        </div>
+                        
+                        <div class="category">
+                            <h5>社会工作</h5>
+                            <div class="form-group checkbox-group">
+                                <label><input type="checkbox" name="social_work" value="class_monitor" data-score="1"> 班长/团支书 (1分)</label>
+                                <label><input type="checkbox" name="social_work" value="deputy_monitor" data-score="0.5"> 副班长 (0.5分)</label>
+                                <label><input type="checkbox" name="social_work" value="study_committee" data-score="0.485"> 学习委员 (0.485分)</label>
+                                <label><input type="checkbox" name="social_work" value="other_committee" data-score="0.475"> 其他班委 (0.475分)</label>
+                                <label><input type="checkbox" name="social_work" value="student_union_chair" data-score="1.5"> 院学生会主席 (1.5分)</label>
+                                <label><input type="checkbox" name="social_work" value="student_union_director" data-score="1.0"> 院学生会部长 (1.0分)</label>
+                                <label><input type="checkbox" name="social_work" value="student_union_deputy" data-score="0.7125"> 院学生会副部长 (0.7125分)</label>
+                                <label><input type="checkbox" name="social_work" value="student_union_member" data-score="0.5"> 院学生会干事 (0.5分)</label>
+                                <label><input type="checkbox" name="social_work" value="club_president" data-score="0.75"> 社团社长 - 校级 (0.75分)</label>
+                                <label><input type="checkbox" name="social_work" value="club_vice_president" data-score="0.5"> 社团副社长 - 校级 (0.5分)</label>
+                                <label><input type="checkbox" name="social_work" value="club_member" data-score="0.5"> 社团干事 - 校级 (0.5分)</label>
+                            </div>
+                        </div>
+                        
+                        <div class="category">
+                            <h5>志愿服务</h5>
+                            <div class="form-group">
+                                <label for="volunteer_hours">志愿服务时长 (小时)：</label>
+                                <input type="number" id="volunteer_hours" name="volunteer_hours" min="0" step="0.5" value="0">
+                                <p class="hint">200小时及以上可获得1分，每增加2小时加0.05分，最高不超过1分</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3>三、证明材料上传</h3>
+                    <div class="form-group">
+                        <label for="proof_files">上传证明材料 (可多选)：</label>
+                        <input type="file" id="proof_files" name="proof_files" multiple>
+                        <p class="hint">请上传所有能证明您加分项目的证书、证明等材料的照片或扫描件</p>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="calculate-btn">计算推免成绩</button>
+                    <button type="reset" class="reset-btn">重置表单</button>
+                </div>
+            </form>
+            
+            {% if final_score %}
+            <div class="result">
+                <h3>推免成绩计算结果</h3>
+                <p>学业综合成绩 (80%): {{ academic_weighted }} 分</p>
+                <p>学术专长成绩 (12%): {{ academic_talent_weighted }} 分</p>
+                <p>综合表现加分 (8%): {{ comprehensive_weighted }} 分</p>
+                <p class="final-score">最终推免综合成绩: <strong>{{ final_score }}</strong> 分</p>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="navigation-links">
+            <a href="{{ url_for('transition_page') }}" class="nav-link">返回选择页面</a>
+            <a href="{{ url_for('student_info') }}" class="nav-link">查看信息汇总</a>
+            <a href="{{ url_for('logout') }}" class="logout-link">退出登录</a>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 可以添加前端验证和计算逻辑
+        });
+    </script>
+</body>
+</html>

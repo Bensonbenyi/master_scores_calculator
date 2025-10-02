@@ -1,0 +1,125 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.profile-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+}
+
+.profile-title {
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.welcome-text {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.profile-form-container {
+    margin: 20px 0 40px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.save-btn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.save-btn:hover {
+    background-color: #27ae60;
+}
+
+.navigation-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.nav-link {
+    color: #3498db;
+    text-decoration: none;
+    margin: 10px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+.logout-link {
+    color: #e74c3c;
+    text-decoration: none;
+    margin: 10px;
+    transition: color 0.3s;
+}
+
+.logout-link:hover {
+    color: #c0392b;
+    text-decoration: underline;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .profile-container {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .navigation-links {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -1,0 +1,54 @@
+name: 部署到生产环境
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+    
+    - name: 设置 Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: 运行数据库迁移
+      run: |
+        flask db upgrade
+    
+    - name: 创建部署包
+      run: |
+        tar -czf deployment.tar.gz \
+          --exclude='.git' \
+          --exclude='__pycache__' \
+          --exclude='*.pyc' \
+          --exclude='.github' \
+          --exclude='tests' \
+          .
+    
+    - name: 上传部署包
+      uses: actions/upload-artifact@v3
+      with:
+        name: deployment-package
+        path: deployment.tar.gz
+    
+    # 这里可以添加实际的部署步骤，比如：
+    # - 部署到云服务器
+    # - 部署到 Docker 容器
+    # - 部署到 Heroku 等平台
+    
+    - name: 部署完成通知
+      run: |
+        echo "部署包已准备就绪，可以部署到生产环境"

@@ -184,8 +184,20 @@ def calculate_score():
     
     username = session['username']
     
-    # 获取学业成绩
-    academic_score = float(request.form.get('academic_score', 0))
+    try:
+        # 获取学业成绩，添加错误处理
+        academic_score_str = request.form.get('academic_score', '0')
+        if not academic_score_str or not academic_score_str.replace('.', '').isdigit():
+            flash('请输入有效的学业成绩', 'error')
+            return redirect(url_for('student_page'))
+        
+        academic_score = float(academic_score_str)
+        if academic_score < 0 or academic_score > 100:
+            flash('学业成绩应在0-100之间', 'error')
+            return redirect(url_for('student_page'))
+    except ValueError:
+        flash('学业成绩格式错误', 'error')
+        return redirect(url_for('student_page'))
     
     # 处理文件上传
     uploaded_files = []

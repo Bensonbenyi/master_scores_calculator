@@ -12,9 +12,13 @@ from datetime import datetime
 app = Flask(__name__, template_folder='html_files')
 
 # 配置数据库
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+import os
+database_url = os.environ.get('DATABASE_URL', 'sqlite:///users.db')
+if database_url.startswith('postgres://'):
+    database_url = database_url.replace('postgres://', 'postgresql://', 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = 'your-secret-key'  
+app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-this-in-production')  
 
 # 配置上传文件
 UPLOAD_FOLDER = 'static/uploads'
@@ -666,4 +670,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001, host='0.0.0.0')
+    port = int(os.environ.get('PORT', 5001))
+    app.run(debug=False, port=port, host='0.0.0.0')

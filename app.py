@@ -663,21 +663,29 @@ def export_excel():
     
     return send_file(temp_file.name, as_attachment=True, download_name=filename, mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
+@app.route('/test')
+def test_route():
+    """测试路由"""
+    return "应用正常运行！当前时间: " + str(datetime.now())
+
 @app.route('/admin/view_data')
 def admin_view_data():
     """管理员查看所有数据"""
     if 'username' not in session or session.get('role') != 'teacher':
         return redirect(url_for('login'))
     
-    # 获取所有用户数据
-    all_users = User.query.all()
-    students = User.query.filter_by(role='student').all()
-    teachers = User.query.filter_by(role='teacher').all()
-    
-    return render_template('admin_data.html', 
-                         all_users=all_users,
-                         students=students, 
-                         teachers=teachers)
+    try:
+        # 获取所有用户数据
+        all_users = User.query.all()
+        students = User.query.filter_by(role='student').all()
+        teachers = User.query.filter_by(role='teacher').all()
+        
+        return render_template('admin_data.html', 
+                             all_users=all_users,
+                             students=students, 
+                             teachers=teachers)
+    except Exception as e:
+        return f"数据库查询错误: {str(e)}", 500
 
 @app.route('/logout')
 def logout():

@@ -1,0 +1,24 @@
+# Dependabot 配置 - 自动更新依赖
+version: 2
+updates:
+  # Python 依赖更新
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "Bensonbenyi"
+    assignees:
+      - "Bensonbenyi"
+    
+  # GitHub Actions 更新
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 3

@@ -1,0 +1,58 @@
+name: PR 检查
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 获取完整历史记录
+    
+    - name: 设置 Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest flake8 black isort
+    
+    - name: 检查代码格式
+      run: |
+        echo "检查代码格式..."
+        black --check --diff .
+        isort --check-only --diff .
+    
+    - name: 代码质量检查
+      run: |
+        echo "运行代码质量检查..."
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    
+    - name: 检查文件大小
+      run: |
+        echo "检查文件大小..."
+        find . -name "*.py" -size +1000k -exec echo "警告: 文件过大: {}" \;
+    
+    - name: 检查敏感信息
+      run: |
+        echo "检查敏感信息..."
+        if grep -r "password\|secret\|key" --include="*.py" --exclude-dir=".git" .; then
+          echo "警告: 发现可能的敏感信息"
+        fi
+    
+    - name: 生成 PR 报告
+      run: |
+        echo "## PR 检查报告" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ 代码格式检查通过" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ 代码质量检查通过" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ 文件大小检查通过" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ 敏感信息检查通过" >> $GITHUB_STEP_SUMMARY

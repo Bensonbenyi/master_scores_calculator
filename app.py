@@ -13,10 +13,14 @@ app = Flask(__name__, template_folder='html_files')
 
 # 配置数据库
 import os
-database_url = os.environ.get('DATABASE_URL', 'sqlite:///users.db')
-if database_url.startswith('postgres://'):
-    database_url = database_url.replace('postgres://', 'postgresql://', 1)
-app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+database_url = os.environ.get('DATABASE_URL')
+if database_url:
+    if database_url.startswith('postgres://'):
+        database_url = database_url.replace('postgres://', 'postgresql://', 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-this-in-production')  
 
@@ -33,6 +37,14 @@ db = SQLAlchemy(app)
 
 # 创建迁移实例
 migrate = Migrate(app, db)
+
+# 确保数据库表存在
+with app.app_context():
+    try:
+        db.create_all()
+        print("数据库表创建成功")
+    except Exception as e:
+        print(f"数据库表创建失败: {e}")
 
 # 用户模型
 class User(db.Model):
@@ -87,18 +99,21 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
         
-        user = User.query.filter_by(username=username).first()
-        
-        if user and user.check_password(password):
-            session['username'] = username
-            session['role'] = user.role
+        try:
+            user = User.query.filter_by(username=username).first()
             
-            if user.role == 'teacher':
-                return redirect(url_for('teacher_dashboard'))
+            if user and user.check_password(password):
+                session['username'] = username
+                session['role'] = user.role
+                
+                if user.role == 'teacher':
+                    return redirect(url_for('teacher_dashboard'))
+                else:
+                    return redirect(url_for('transition_page'))
             else:
-                return redirect(url_for('transition_page'))
-        else:
-            return '用户名或密码错误'
+                return f'用户名或密码错误。用户查询结果: {user is not None if user else "None"}'
+        except Exception as e:
+            return f'登录时发生错误: {str(e)}'
     
     return render_template('login.html')
 
@@ -666,7 +681,12 @@ def export_excel():
 @app.route('/test')
 def test_route():
     """测试路由"""
-    return "应用正常运行！当前时间: " + str(datetime.now())
+    try:
+        # 测试数据库连接
+        user_count = User.query.count()
+        return f"应用正常运行！当前时间: {datetime.now()}<br>数据库连接正常，用户数量: {user_count}"
+    except Exception as e:
+        return f"应用运行中，但数据库连接有问题: {str(e)}"
 
 @app.route('/admin/view_data')
 def admin_view_data():
